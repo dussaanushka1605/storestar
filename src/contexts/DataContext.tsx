@@ -100,6 +100,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [ratings, setRatings] = useState<Rating[]>(initialRatings);
   const [users, setUsers] = useState<User[]>(initialUsers);
 
+<<<<<<< HEAD
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     async function load() {
@@ -124,12 +125,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     load();
   }, []);
 
+=======
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
   const stats: DashboardStats = {
     totalUsers: users.length,
     totalStores: stores.length,
     totalRatings: ratings.length,
   };
 
+<<<<<<< HEAD
   const addStore = useCallback(async (store: Omit<Store, "id" | "createdAt">) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -191,6 +195,40 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     }
     setRatings((prev) => prev.map((r) => (r.id === ratingId ? { ...r, rating: newRating } : r)));
   }, [ratings, addRating]);
+=======
+  const addStore = useCallback((store: Omit<Store, "id" | "createdAt">) => {
+    const newStore: Store = {
+      ...store,
+      id: String(Date.now()),
+      createdAt: new Date().toISOString(),
+    };
+    setStores((prev) => [...prev, newStore]);
+  }, []);
+
+  const addUser = useCallback((user: Omit<User, "id" | "createdAt">) => {
+    const newUser: User = {
+      ...user,
+      id: String(Date.now()),
+      createdAt: new Date().toISOString(),
+    };
+    setUsers((prev) => [...prev, newUser]);
+  }, []);
+
+  const addRating = useCallback((rating: Omit<Rating, "id" | "createdAt">) => {
+    const newRating: Rating = {
+      ...rating,
+      id: String(Date.now()),
+      createdAt: new Date().toISOString(),
+    };
+    setRatings((prev) => [...prev, newRating]);
+  }, []);
+
+  const updateRating = useCallback((ratingId: string, newRating: number) => {
+    setRatings((prev) =>
+      prev.map((r) => (r.id === ratingId ? { ...r, rating: newRating } : r))
+    );
+  }, []);
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
 
   const getUserRating = useCallback(
     (userId: string, storeId: string) => {

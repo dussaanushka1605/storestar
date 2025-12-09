@@ -13,6 +13,10 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+<<<<<<< HEAD
+=======
+// Mock users for demo - in production, this would come from Supabase
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
 const mockUsers: (User & { password: string })[] = [
   {
     id: "1",
@@ -63,6 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true);
     try {
+<<<<<<< HEAD
       const res = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,12 +82,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: true };
       }
       const foundUser = mockUsers.find((u) => u.email === email && u.password === password);
+=======
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      
+      const foundUser = mockUsers.find(
+        (u) => u.email === email && u.password === password
+      );
+      
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       if (foundUser) {
         const { password: _, ...userWithoutPassword } = foundUser;
         setUser(userWithoutPassword);
         localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
         return { success: true };
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       return { success: false, error: "Invalid email or password" };
     } finally {
       setIsLoading(false);
@@ -92,6 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signup = useCallback(async (data: { name: string; email: string; address: string; password: string }) => {
     setIsLoading(true);
     try {
+<<<<<<< HEAD
       const res = await fetch("http://localhost:4000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,10 +124,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("token", body.token);
         return { success: true };
       }
+=======
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       const existingUser = mockUsers.find((u) => u.email === data.email);
       if (existingUser) {
         return { success: false, error: "Email already registered" };
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       const newUser: User = {
         id: String(mockUsers.length + 1),
         name: data.name,
@@ -117,9 +144,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         role: "normal_user",
         createdAt: new Date().toISOString(),
       };
+<<<<<<< HEAD
       mockUsers.push({ ...newUser, password: data.password });
       setUser(newUser);
       localStorage.setItem("currentUser", JSON.stringify(newUser));
+=======
+      
+      mockUsers.push({ ...newUser, password: data.password });
+      setUser(newUser);
+      localStorage.setItem("currentUser", JSON.stringify(newUser));
+      
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       return { success: true };
     } finally {
       setIsLoading(false);
@@ -135,6 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!user) return { success: false, error: "Not authenticated" };
     
     try {
+<<<<<<< HEAD
       const token = localStorage.getItem("token");
       if (token) {
         const res = await fetch(`http://localhost:4000/users/${user.id}/password`, {
@@ -144,6 +180,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         if (res.ok) return { success: true };
       }
+=======
+>>>>>>> 96691bab005aa9b572513424c318f58768c96004
       await new Promise((resolve) => setTimeout(resolve, 500));
       const userIndex = mockUsers.findIndex((u) => u.id === user.id);
       if (userIndex !== -1) {
